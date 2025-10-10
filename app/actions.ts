@@ -2,13 +2,20 @@
 
 import { z } from "zod";
 
+const emailRegexp = new RegExp(/^[a-zA-Z0-9._%+-]+@zod\.com$/);
+
+const passwordRegexp = new RegExp(/^(?=.*\d).+$/);
+
 const formSchema = z.object({
-  email: z.email(),
-  username: z.string(),
-  password: z.string(),
+  email: z.email().regex(emailRegexp, "Only @zod.com emails are allowed"),
+  username: z.string().min(5, "Username must be at least 5 characters long"),
+  password: z
+    .string()
+    .min(10, "Password must be at least 10 characters long")
+    .regex(passwordRegexp, "Password must include a number"),
 });
 
-export default async function login(prevState: any, formData: FormData) {
+export default async function login(_: any, formData: FormData) {
   const data = {
     email: formData.get("email"),
     username: formData.get("username"),
@@ -18,29 +25,11 @@ export default async function login(prevState: any, formData: FormData) {
   const result = formSchema.safeParse(data);
   if (!result.success) {
     return {
-      ...prevState,
       values: data,
-      result: {
-        ok: false,
-      },
-      email: {
-        message: ["Please enter a valid email address"],
-      },
-    };
-  } else if (data.password !== "12345") {
-    return {
-      ...prevState,
-      values: data,
-      result: {
-        ok: false,
-      },
-      password: {
-        message: ["Wrong password"],
-      },
+      error: z.flattenError(result.error),
     };
   } else {
     return {
-      ...prevState,
       values: data,
       result: {
         ok: true,

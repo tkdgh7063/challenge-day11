@@ -28,8 +28,8 @@ export default function Home() {
               type="email"
               placeholder="Email"
               name="email"
-              defaultValue={state?.values?.email}
-              errors={state?.result.ok ? [] : state?.email?.message}
+              defaultValue={state?.values.email as string}
+              errors={state?.error?.fieldErrors.email}
               required
             />
           </div>
@@ -39,7 +39,8 @@ export default function Home() {
               type="text"
               placeholder="Username"
               name="username"
-              defaultValue={state?.values?.username}
+              defaultValue={state?.values?.username as string}
+              errors={state?.error?.fieldErrors.username}
               required
             />
           </div>
@@ -49,8 +50,8 @@ export default function Home() {
               type="password"
               placeholder="Password"
               name="password"
-              errors={state?.result.ok ? [] : state?.password?.message}
-              defaultValue={state?.values?.password}
+              defaultValue={state?.values?.password as string}
+              errors={state?.error?.fieldErrors.password}
               required
             />
           </div>
