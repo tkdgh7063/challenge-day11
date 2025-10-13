@@ -42,3 +42,8 @@ next-env.d.ts
 
 # AI tool
 .qodo/
+
+# Prisma
+/app/generated/prisma
+*.db
+*.db-journal
