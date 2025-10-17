@@ -46,7 +46,7 @@ export default async function login(_: any, formData: FormData) {
         session.id = user.id;
         await session.save();
 
-        redirect("/profile");
+        redirect("/");
       } else {
         return {
           values: data,

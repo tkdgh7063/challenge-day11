@@ -1,16 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import getSession from "./lib/session";
 
-const publicOnlyURLs = new Set(["/create-account", "/log-in", "/"]);
+const publicOnlyURLs = new Set(["/create-account", "/log-in"]);
 
 export async function middleware(request: NextRequest) {
   const isLoggedIn = Boolean((await getSession()).id);
   const isPublic = publicOnlyURLs.has(request.nextUrl.pathname);
   if (isLoggedIn && isPublic) {
-    return NextResponse.redirect(new URL("/profile", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
   if (!isLoggedIn && !isPublic) {
-    return NextResponse.redirect(new URL("/", request.url));
+    return NextResponse.redirect(new URL("/log-in", request.url));
   }
 }
 
