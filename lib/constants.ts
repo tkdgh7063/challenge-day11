@@ -26,6 +26,8 @@ export const ERROR_MESSAGES = {
 
   PHONE_INVALID_FORMAT: "Please enter a valid phone number",
   PHONE_INVALID_LOCALE: "Only Korean phone numbers are allowed",
+
+  TWEET_REQUIRED: "Tweet is required",
 };
 
 export const HASH_ROUNDS = 12;
